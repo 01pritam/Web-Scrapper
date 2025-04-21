@@ -21,6 +21,26 @@ const ProductDetails = ({ product }) => {
     }
   };
 
+  const downloadCSV = () => {
+    if (!product) return;
+
+    const headers = Object.keys(product).join(",") + "\n";
+    const values = Object.values(product)
+      .map((value) => {
+        if (Array.isArray(value)) return `"${value.join('; ')}"`;
+        return `"${String(value).replace(/"/g, '""')}"`;
+      })
+      .join(",");
+    const csv = headers + values;
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute('download', 'product_data.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (!product) {
     return null;
   }
@@ -53,11 +73,21 @@ const ProductDetails = ({ product }) => {
               ))}
             </ul>
           </div>
+
+          {/* ✅ Download CSV Button */}
+          <div className="mt-4">
+            <button
+              onClick={downloadCSV}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+            >
+              Download CSV File
+            </button>
+          </div>
         </div>
-        
       </div>
+
       <div className='flex px-7'>
-      {youtubeVideo && (
+        {youtubeVideo && (
           <div className="w-1/2 px-4 py-2">
             <h3 className="text-md font-semibold text-gray-800 mb-2">Review Video:</h3>
             <div className="embed-responsive">
