@@ -9,7 +9,7 @@ const FormSection = ({ setProduct }) => {
     e.preventDefault();
     setLoading(true); 
     try {
-      const response = await axios.post('http://localhost:3000/scrape', { url });
+      const response = await axios.post('https://web-scrapper-1-b471.onrender.com/scrape', { url });
       setProduct(response.data.product);
     } catch (error) {
       console.error('An error occurred while fetching the product data:', error);
