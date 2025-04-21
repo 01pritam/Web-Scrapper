@@ -12,7 +12,7 @@ const ProductDetails = ({ product }) => {
 
   const searchYouTubeVideo = async (query) => {
     try {
-      const response = await axios.get('http://localhost:3000/search-youtube', {
+      const response = await axios.get('https://web-scrapper-1-b471.onrender.com/search-youtube', {
         params: { q: `${query} review` },
       });
       setYoutubeVideo(response.data);
